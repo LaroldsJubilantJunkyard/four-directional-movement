@@ -16,6 +16,7 @@ extern const int16_t directions[9][2];
 uint8_t linkDirection = 0;
 uint16_t linkX, linkY;
 
+// Keep track of which metasprite to use for link
 metasprite_t const *linkMetasprite;
 
 void SetupLink()
@@ -23,6 +24,8 @@ void SetupLink()
     // set the down tiles in
     set_sprite_data(0, LinkDown_TILE_COUNT, LinkDown_tiles);
 
+    // Position near the top middle
+    // Scale the position, since we are using scaled integers
     linkX = 80 << 4;
     linkY = 40 << 4;
 
@@ -42,12 +45,15 @@ uint8_t UpdateLink()
     uint8_t linkMoving = FALSE;
     linkDirection = linkDirection;
 
+    // check if the right joypad button is pressed
     if (joypadCurrent & J_RIGHT)
     {
         linkX += LINK_SPEED;
         linkDirection = J_RIGHT;
         linkMoving = TRUE;
     }
+
+    // check if the left joypad button is pressed
     if (joypadCurrent & J_LEFT)
     {
         linkX -= LINK_SPEED;
@@ -55,12 +61,15 @@ uint8_t UpdateLink()
         linkMoving = TRUE;
     }
 
+    // check if the down joypad button is pressed
     if (joypadCurrent & J_DOWN)
     {
         linkY += LINK_SPEED;
         linkDirection = J_DOWN;
         linkMoving = TRUE;
     }
+
+    // check if the up joypad button is pressed
     if (joypadCurrent & J_UP)
     {
         linkY -= LINK_SPEED;

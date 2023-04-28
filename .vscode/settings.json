@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "gb.h": "c",
+        "linkup.h": "c",
+        "linkright.h": "c",
+        "palettes.h": "c",
+        "linkdown.h": "c",
+        "metasprites.h": "c",
+        "moblin.h": "c"
+    }
+}

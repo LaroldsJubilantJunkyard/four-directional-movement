@@ -7,6 +7,7 @@
 #include "graphics/palettes.h"
 
 #define MOBLIN_SPEED 4
+#define LINK_PADDED_TILE_COUNT 12
 extern uint8_t joypadCurrent, joypadPrevious, twoFrameRealValue;
 
 extern const int16_t directions[9][2];
@@ -17,8 +18,11 @@ uint16_t moblinCounter = 200;
 
 void SetupMoblin()
 {
-
-    set_sprite_data(8, Moblin_TILE_COUNT, Moblin_tiles);
+    // It's not clear in this tutorial, but:
+    // We Take into consideration that some of links directions/sprites having different lengths
+    // We'll "allocate" (not really in terms of memory, just in terms of organization) a set number of tiles for link
+    // This way, we avoid links tiles overriding the moblins tiles
+    set_sprite_data(LINK_PADDED_TILE_COUNT, Moblin_TILE_COUNT, Moblin_tiles);
 
     moblinX = 80 << 4;
     moblinY = 100 << 4;
@@ -86,10 +90,12 @@ uint8_t UpdateMoblin(uint8_t lastSprite)
         break;
     }
 
+    // Our base tile isn't 0, that's where link's tiles start
+    // We'll use the tiles after links as our base tiles
     // Draw the metasprite, and return how many sprites were used
     // use the vflip (flips along the vertical axis) if we are drawing the left sprite
     if (flip)
-        return move_metasprite_vflip(moblinMetasprite, 8, lastSprite, moblinX >> 4, moblinY >> 4);
+        return move_metasprite_vflip(moblinMetasprite, LINK_PADDED_TILE_COUNT, lastSprite, moblinX >> 4, moblinY >> 4);
     else
-        return move_metasprite(moblinMetasprite, 8, lastSprite, moblinX >> 4, moblinY >> 4);
+        return move_metasprite(moblinMetasprite, LINK_PADDED_TILE_COUNT, lastSprite, moblinX >> 4, moblinY >> 4);
 }

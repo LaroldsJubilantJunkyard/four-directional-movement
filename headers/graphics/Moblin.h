@@ -25,6 +25,6 @@ BANKREF_EXTERN(Moblin)
 extern const palette_color_t Moblin_palettes[8];
 extern const uint8_t Moblin_tiles[256];
 
-extern const metasprite_t* const Moblin_metasprites[6];
+extern const metasprite_t* const Moblin_metasprites[8];
 
 #endif

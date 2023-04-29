@@ -16,6 +16,8 @@ extern const int16_t directions[9][2];
 uint8_t linkDirection = 0;
 uint16_t linkX, linkY;
 
+uint8_t flipLink = FALSE;
+
 // Keep track of which metasprite to use for link
 metasprite_t const *linkMetasprite;
 
@@ -77,8 +79,6 @@ uint8_t UpdateLink()
         linkMoving = TRUE;
     }
 
-    uint8_t flip = FALSE;
-
     // If link is moving
     if (linkMoving)
     {
@@ -112,16 +112,19 @@ uint8_t UpdateLink()
         {
         case J_DOWN:
             linkMetasprite = LinkDown_metasprites[twoFrameRealValue];
+            flipLink = FALSE;
             break;
         case J_RIGHT:
             linkMetasprite = LinkRight_metasprites[twoFrameRealValue];
+            flipLink = FALSE;
             break;
         case J_LEFT:
             linkMetasprite = LinkRight_metasprites[twoFrameRealValue];
-            flip = TRUE;
+            flipLink = TRUE;
             break;
         case J_UP:
             linkMetasprite = LinkUp_metasprites[twoFrameRealValue];
+            flipLink = FALSE;
             break;
         }
     }
@@ -129,7 +132,7 @@ uint8_t UpdateLink()
     // flip along the vertical access if neccessary
     // Draw link at the non-scaled position
     // Return how many sprites were used
-    if (flip)
+    if (flipLink)
         return move_metasprite_vflip(linkMetasprite, 0, 0, linkX >> 4, linkY >> 4);
     else
         return move_metasprite(linkMetasprite, 0, 0, linkX >> 4, linkY >> 4);

@@ -112,6 +112,14 @@ const metasprite_t Moblin_metasprite5[] = {
 	METASPR_ITEM(-8, -8, 12, 1), METASPR_ITEM(0, 8, 14, 1), METASPR_TERM
 };
 
-const metasprite_t* const Moblin_metasprites[6] = {
-	Moblin_metasprite0, Moblin_metasprite1, Moblin_metasprite2, Moblin_metasprite3, Moblin_metasprite4, Moblin_metasprite5
+const metasprite_t Moblin_metasprite6[] = {
+	METASPR_ITEM(-8, -8, 10, 33), METASPR_ITEM(0, 8, 8, 33), METASPR_TERM
+};
+
+const metasprite_t Moblin_metasprite7[] = {
+	METASPR_ITEM(-8, -8, 14, 33), METASPR_ITEM(0, 8, 12, 33), METASPR_TERM
+};
+
+const metasprite_t* const Moblin_metasprites[8] = {
+	Moblin_metasprite0, Moblin_metasprite1, Moblin_metasprite2, Moblin_metasprite3, Moblin_metasprite4, Moblin_metasprite5, Moblin_metasprite6, Moblin_metasprite7
 };

@@ -9,10 +9,12 @@
 
 #define MOBLIN_SPEED 4
 #define LINK_PADDED_TILE_COUNT 12
+#define MOBLIN_COUNTER_RESET 255u
+#define MOBLIN_COUNTER_WALK_LIMIT 128u
 
 uint8_t moblinDirection = 0;
 uint16_t moblinX, moblinY;
-uint16_t moblinCounter = 200;
+uint16_t moblinCounter = MOBLIN_COUNTER_RESET;
 
 metasprite_t const *moblinMetasprite=0;
 
@@ -36,11 +38,11 @@ uint8_t UpdateMoblin(uint8_t lastSprite)
 
 
     // If we are about to reach zero
-    if (moblinCounter <= 3)
+    if (moblinCounter <= 1)
     {
 
         // Reset our counter
-        moblinCounter = 400;
+        moblinCounter = MOBLIN_COUNTER_RESET;
 
         // Pick a new direction
         // use the DIV register to get a pseduo random value
@@ -53,11 +55,11 @@ uint8_t UpdateMoblin(uint8_t lastSprite)
     {
 
         // Decrease our counter
-        moblinCounter -= 3;
+        moblinCounter --;
     }
 
     // The moblin is moving when the coutner is above 256
-    if (moblinCounter > 256)
+    if (moblinCounter > MOBLIN_COUNTER_WALK_LIMIT)
     {
 
         // Change his x and y positio based on the direction he's moving in

@@ -17,7 +17,7 @@ const Vector8 directionsForTwoFrameObjects[7]={
 };
 
 uint8_t joypadCurrent=0;
-uint16_t twoFrameCounter= 0;
+uint8_t twoFrameCounter= 0;
 uint8_t twoFrameRealValue=0;
 
 

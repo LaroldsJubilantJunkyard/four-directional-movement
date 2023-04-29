@@ -34,8 +34,6 @@ void SetupMoblin()
 uint8_t UpdateMoblin(uint8_t lastSprite)
 {
 
-    uint8_t flip = FALSE;
-    uint8_t moblinMoving = FALSE;
 
     // If we are about to reach zero
     if (moblinCounter <= 3)
@@ -62,20 +60,14 @@ uint8_t UpdateMoblin(uint8_t lastSprite)
     if (moblinCounter > 256)
     {
 
-        moblinMoving = TRUE;
-
         // Change his x and y positio based on the direction he's moving in
         moblinX += directionsForTwoFrameObjects[moblinDirection].x * MOBLIN_SPEED;
         moblinY += directionsForTwoFrameObjects[moblinDirection].y * MOBLIN_SPEED;
 
-
-        // use frame 0 when the moblin isn't moving.
-        uint8_t moblinFrame = moblinMoving ? twoFrameRealValue : 0;
-
         // use the proper metasprites for the moblin
         // Each direction has two metasprites
         // For the left direction, we'll just flip the right metasprite
-        moblinMetasprite = Moblin_metasprites[moblinDirection+moblinFrame];
+        moblinMetasprite = Moblin_metasprites[moblinDirection+twoFrameRealValue];
         
     }
 

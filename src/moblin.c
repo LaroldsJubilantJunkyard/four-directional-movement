@@ -5,12 +5,10 @@
 #include <stdint.h>
 #include "graphics/Moblin.h"
 #include "graphics/palettes.h"
+#include "common.h"
 
 #define MOBLIN_SPEED 4
 #define LINK_PADDED_TILE_COUNT 12
-extern uint8_t joypadCurrent, joypadPrevious, twoFrameRealValue;
-
-extern const int16_t directions[9][2];
 
 uint8_t moblinDirection = 0;
 uint16_t moblinX, moblinY;
@@ -28,7 +26,7 @@ void SetupMoblin()
 
     moblinX = 80 << 4;
     moblinY = 100 << 4;
-    moblinDirection = J_UP;
+    moblinDirection = 0;
 
     moblinMetasprite=Moblin_metasprites[0];
 }
@@ -48,7 +46,9 @@ uint8_t UpdateMoblin(uint8_t lastSprite)
 
         // Pick a new direction
         // use the DIV register to get a pseduo random value
-        const uint8_t directionsOnly[] = {J_LEFT, J_RIGHT, J_DOWN, J_UP};
+        // We'll use values that correspond with our 'twoFrameDirections' array
+        // Those values also are the starting metasprites for each direction: down,up, right, left
+        const uint8_t directionsOnly[] = {0, 2, 4 ,6};
         moblinDirection = directionsOnly[DIV_REG % 4];
     }
     else
@@ -65,8 +65,8 @@ uint8_t UpdateMoblin(uint8_t lastSprite)
         moblinMoving = TRUE;
 
         // Change his x and y positio based on the direction he's moving in
-        moblinX += directions[moblinDirection][0] * MOBLIN_SPEED;
-        moblinY += directions[moblinDirection][1] * MOBLIN_SPEED;
+        moblinX += directionsForTwoFrameObjects[moblinDirection].x * MOBLIN_SPEED;
+        moblinY += directionsForTwoFrameObjects[moblinDirection].y * MOBLIN_SPEED;
 
 
         // use frame 0 when the moblin isn't moving.
@@ -75,21 +75,8 @@ uint8_t UpdateMoblin(uint8_t lastSprite)
         // use the proper metasprites for the moblin
         // Each direction has two metasprites
         // For the left direction, we'll just flip the right metasprite
-        switch (moblinDirection)
-        {
-        case J_DOWN:
-            moblinMetasprite = Moblin_metasprites[moblinFrame];
-            break;
-        case J_UP:
-            moblinMetasprite = Moblin_metasprites[2 + moblinFrame];
-            break;
-        case J_RIGHT:
-            moblinMetasprite = Moblin_metasprites[4 + moblinFrame];
-            break;
-        case J_LEFT:
-            moblinMetasprite = Moblin_metasprites[6 + moblinFrame];
-            break;
-        }
+        moblinMetasprite = Moblin_metasprites[moblinDirection+moblinFrame];
+        
     }
 
     // Our base tile isn't 0, that's where link's tiles start

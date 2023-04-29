@@ -5,42 +5,8 @@
 #include "graphics/palettes.h"
 #include "moblin.h"
 #include "link.h"
+#include "common.h"
 
-// This is an easy way to determine a direction using one of our joypad constants
-const int16_t directions[9][2] ={
-    {0,0},
-    
-    {1,0},// Right
-    {-1,0},// Left
-    {0,0},
-    {0,-1},// Up
-    {0,0},
-    {0,0},
-    {0,0},
-    {0,1},//Down
-
-};
-
-uint8_t joypadCurrent=0;
-
-uint16_t twoFrameCounter= 0;
-uint8_t twoFrameRealValue=0;
-
-
-/**
- * @brief Our moblin and link has two frame walk animation. They'll share a common variable that determines which frame to show
- * when they are walking. 
- */
-void UpdateTwoFrameCounter(){
-    twoFrameCounter+=3;
-    twoFrameRealValue = twoFrameCounter>>4;
-
-    // Stop & reset if the vlaue is over 2
-    if(twoFrameRealValue>=2){
-        twoFrameRealValue=0;
-        twoFrameCounter=0;
-    }
-}
 
 void main(void)
 {
